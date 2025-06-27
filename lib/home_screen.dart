@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:rick_and_morty/constants/icon_paths.dart';
+import 'package:rick_and_morty/features/characters/ui/characters_screen.dart';
+import 'package:rick_and_morty/features/episodes/ui/episodes_screen.dart';
+import 'package:rick_and_morty/features/locations/ui/locations_screen.dart';
+import 'package:rick_and_morty/features/settings/ui/settings_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -29,10 +33,26 @@ class _HomeScreenState extends State<HomeScreen> {
         showUnselectedLabels: true,
         onTap: (value) => setState(() => _currentIndex = value),
       ),
+      body: _getBody(),
     );
   }
 
-    List<BottomNavigationBarItem> _buildTabs() {
+  Widget _getBody() {
+    switch(_currentIndex){
+      case 0:
+        return CharactersScreen();
+      case 1:
+        return LocationsScreen();
+      case 2:
+        return EpisodesScreen();
+      case 3:
+        return SettingsScreen();
+      default:
+        return ErrorWidget(Exception("Неверный индекс на Главной Странице"));
+    }
+  }
+
+  List<BottomNavigationBarItem> _buildTabs() {
     return [
       BottomNavigationBarItem(
         label: "Персонажи",
@@ -64,7 +84,6 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     ];
   }
-
 
   ColorFilter getFilter(int index) => ColorFilter.mode(
     index == _currentIndex
