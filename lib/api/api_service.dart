@@ -1,6 +1,10 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:rick_and_morty/api/dio_client.dart';
 import 'package:rick_and_morty/data/models/character_model.dart';
+import 'package:rick_and_morty/data/models/info_model.dart';
+import 'package:rick_and_morty/data/models/paged_list_model.dart';
 
 class ApiService {
   final Dio _dio;
@@ -8,8 +12,41 @@ class ApiService {
   ApiService({required DioClient dioClient}) : _dio = dioClient.dio;
 
   Future<List<CharacterModel>> getCharactersByIdList(List<int> ids) async {
-    String idList = ids.join(",");
-    Response<List<CharacterModel>> res = await _dio.get<List<CharacterModel>>("/character/$idList");
-    return res.data!;
+    String idList = ids.join(","); // [1, 2, 3] => "1,2,3"
+    Response res = await _dio.get(
+      "/character/$idList",
+    ); // запрос на сервер => Response
+
+    List<CharacterModel> characters = [];
+    for (var element in res.data) {
+      CharacterModel characterModel = CharacterModel.fromJson(
+        element,
+      );
+
+      characters.add(characterModel);
+    }
+
+    return characters;
+  }
+
+  Future<CharacterModel> getCharacterById(int id) async {
+    Response res = await _dio.get("/character/$id");
+
+    // res.data is Map<String, dynamic> => true
+
+    CharacterModel character = CharacterModel.fromJson(res.data);
+    return character;
+  }
+
+  Future<PagedListModel> getCharacters() async {
+    Response res = await _dio.get("/character");
+
+    PagedListModel pagedList = PagedListModel(
+      info: InfoModel.fromJson(res.data["info"]),
+      results: (res.data["results"] as List)
+          .map((e) => CharacterModel.fromJson(e))
+          .toList(),
+    );
+    return pagedList;
   }
 }

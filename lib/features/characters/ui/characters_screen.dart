@@ -11,9 +11,6 @@ class CharactersScreen extends StatelessWidget {
     ApiService(dioClient: DioClient())
         .getCharactersByIdList(
           [1, 4, 5],
-        )
-        .then(
-          (value) => print(value[0].name),
         );
     return SafeArea(
       child: Padding(

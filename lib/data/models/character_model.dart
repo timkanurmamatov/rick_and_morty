@@ -1,3 +1,5 @@
+import 'package:rick_and_morty/data/models/location_short_model.dart';
+
 class CharacterModel {
   final int id;
   final String name;
@@ -8,8 +10,8 @@ class CharacterModel {
   final String image;
   final String url;
   final String created;
-  final Map<String, dynamic> origin;
-  final Map<String, dynamic> location;
+  final LocationShortModel origin;
+  final LocationShortModel location;
   final List<String> episode;
 
   CharacterModel({
@@ -26,4 +28,21 @@ class CharacterModel {
     required this.location,
     required this.episode,
   });
+
+  factory CharacterModel.fromJson(Map<String, dynamic> json) {
+    return CharacterModel(
+      id: json["id"],
+      name: json["name"],
+      status: json["status"],
+      species: json["species"],
+      type: json["type"],
+      gender: json["gender"],
+      image: json["image"],
+      url: json["url"],
+      created: json["created"],
+      origin: LocationShortModel.fromJson(json["origin"]),
+      location: LocationShortModel.fromJson(json["location"]),
+      episode: (json["episode"] as List).map((e) => e as String).toList(),
+    );
+  }
 }
