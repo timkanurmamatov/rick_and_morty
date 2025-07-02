@@ -79,7 +79,7 @@ flutter:
   fonts:
     - family: Roboto
       fonts:
-        - asset: fonts/roboto_variable.ttf
+        - asset: assets/fonts/roboto_variable.ttf
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf
