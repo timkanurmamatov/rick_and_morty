@@ -1,17 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:rick_and_morty/api/api_service.dart';
-import 'package:rick_and_morty/api/dio_client.dart';
-import 'package:rick_and_morty/data/models/character_model.dart';
 
 class CharactersScreen extends StatelessWidget {
   const CharactersScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    ApiService(dioClient: DioClient())
-        .getCharactersByIdList(
-          [1, 4, 5],
-        );
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.all(16.0),

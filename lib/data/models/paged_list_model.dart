@@ -1,17 +1,18 @@
 import 'package:rick_and_morty/data/models/info_model.dart';
 
-class PagedListModel {
+class PagedListModel<T> {
   final InfoModel info;
-  final List results;
+  final List<T> results;
 
   PagedListModel({required this.info, required this.results});
 
-  factory PagedListModel.fromJson(Map<String, dynamic> json) {
+  factory PagedListModel.fromJson(
+    Map<String, dynamic> json,
+    T Function(Map<String, dynamic>) fromJsonT,
+  ) {
     return PagedListModel(
       info: InfoModel.fromJson(json["info"]),
-      results: json["results"],
+      results: (json["results"] as List).map((e) => fromJsonT(e)).toList(),
     );
   }
 }
-
-

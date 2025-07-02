@@ -38,14 +38,12 @@ class ApiService {
     return character;
   }
 
-  Future<PagedListModel> getCharacters() async {
+  Future<PagedListModel<CharacterModel>> getCharacters() async {
     Response res = await _dio.get("/character");
 
-    PagedListModel pagedList = PagedListModel(
-      info: InfoModel.fromJson(res.data["info"]),
-      results: (res.data["results"] as List)
-          .map((e) => CharacterModel.fromJson(e))
-          .toList(),
+    PagedListModel<CharacterModel> pagedList = PagedListModel<CharacterModel>.fromJson(
+      res.data,
+      CharacterModel.fromJson,
     );
     return pagedList;
   }
