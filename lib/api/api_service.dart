@@ -1,9 +1,6 @@
-import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:rick_and_morty/api/dio_client.dart';
 import 'package:rick_and_morty/data/models/character_model.dart';
-import 'package:rick_and_morty/data/models/info_model.dart';
 import 'package:rick_and_morty/data/models/paged_list_model.dart';
 
 class ApiService {
