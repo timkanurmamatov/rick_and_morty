@@ -1,16 +1,16 @@
-class LocationShortModel {
+class LocationShortDto {
   final String name;
   final String url;
 
-  LocationShortModel({
+  LocationShortDto({
     required this.name,
     required this.url,
   });
 
-  factory LocationShortModel.fromJson(
+  factory LocationShortDto.fromJson(
     Map<String, dynamic> json,
   ) {
-    return LocationShortModel(
+    return LocationShortDto(
       name: json["name"],
       url: json["url"],
     );

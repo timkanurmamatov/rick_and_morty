@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:rick_and_morty/constants/icon_paths.dart';
-import 'package:rick_and_morty/features/characters/ui/characters_screen.dart';
-import 'package:rick_and_morty/features/episodes/ui/episodes_screen.dart';
-import 'package:rick_and_morty/features/locations/ui/locations_screen.dart';
-import 'package:rick_and_morty/features/settings/ui/settings_screen.dart';
+import 'package:rick_and_morty/presentation/characters/ui/screens/characters_screen.dart';
+import 'package:rick_and_morty/presentation/episodes/ui/episodes_screen.dart';
+import 'package:rick_and_morty/presentation/locations/ui/locations_screen.dart';
+import 'package:rick_and_morty/presentation/settings/ui/settings_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -38,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _getBody() {
-    switch(_currentIndex){
+    switch (_currentIndex) {
       case 0:
         return CharactersScreen();
       case 1:
@@ -86,9 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   ColorFilter getFilter(int index) => ColorFilter.mode(
-    index == _currentIndex
-        ? Theme.of(context).colorScheme.primary
-        : Theme.of(context).colorScheme.outline,
+    index == _currentIndex ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.outline,
     BlendMode.srcIn,
   );
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:rick_and_morty/constants/color_constants.dart';
 import 'package:rick_and_morty/constants/image_paths.dart';
 
 class CharacterListTile extends StatelessWidget {
@@ -31,7 +30,7 @@ class CharacterListTile extends StatelessWidget {
           clipBehavior: Clip.hardEdge,
           child: FadeInImage.assetNetwork(
             fit: BoxFit.fill,
-            placeholder: ImagePaths.rickPLaceholder,
+            placeholder: ImagePaths.placeholder,
             image: imageUrl,
           ),
         ),
