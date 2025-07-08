@@ -1,6 +1,6 @@
 class LocationShortEntity {
   final String name;
-  final String id;
+  final int id;
 
   LocationShortEntity({
     required this.name,

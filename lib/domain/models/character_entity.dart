@@ -10,7 +10,7 @@ class CharacterEntity {
   final String image;
   final LocationShortEntity origin;
   final LocationShortEntity location;
-  final List<String> episodeIds;
+  final List<int> episodeIds;
 
   CharacterEntity({
     required this.id,

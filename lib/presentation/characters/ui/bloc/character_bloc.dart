@@ -1,7 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:rick_and_morty/api/api_service.dart';
-import 'package:rick_and_morty/api/dio_client.dart';
+import 'package:rick_and_morty/data/repositories/character_repository_impl.dart';
 import 'package:rick_and_morty/domain/models/character_entity.dart';
 import 'package:rick_and_morty/domain/models/paged_list_entity.dart';
 import 'package:rick_and_morty/presentation/characters/ui/bloc/character_state_data.dart';
@@ -20,10 +19,7 @@ class CharacterBloc extends Bloc<CharacterEvent, CharacterState> {
   ) async {
     emit(CharacterLoading(data: state.data));
 
-    ApiService service = ApiService(dioClient: DioClient());
-
-    // todo: добавить репозитории в качестве прослойки между data и domain
-    PagedListEntity<CharacterEntity> pagedCharacters = await service.getCharacters();
+    PagedListEntity<CharacterEntity> pagedCharacters = await CharacterRepositoryImpl().getCharacters();
 
     emit(
       CharacterLoaded(
