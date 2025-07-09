@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rick_and_morty/presentation/characters/ui/bloc/character_bloc.dart';
+import 'package:rick_and_morty/presentation/characters/ui/bloc/character_bloc/character_bloc.dart';
+import 'package:rick_and_morty/presentation/characters/ui/screens/characters_search_screen.dart';
 import 'package:rick_and_morty/presentation/characters/ui/widgets/character_list_content.dart';
 import 'package:rick_and_morty/presentation/common/widgets/total_count_widget.dart';
 
@@ -67,6 +68,14 @@ class _CharactersScreenState extends State<CharactersScreen> {
                     SizedBox(height: 26, child: VerticalDivider()),
                     IconButton(icon: Icon(Icons.filter_alt), onPressed: () {}),
                   ],
+                  // enabled: false,
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => CharactersSearchScreen(),
+                      ),
+                    );
+                  },
                 ),
                 SizedBox(height: 20),
                 Row(
