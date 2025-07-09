@@ -11,6 +11,7 @@ part 'character_state.dart';
 class CharacterBloc extends Bloc<CharacterEvent, CharacterState> {
   CharacterBloc() : super(CharacterInitial()) {
     on<LoadCharactersEvent>(_onLoadCharacters);
+    on<LoadNextCharactersPageEvent>(_onLoadNextCharactersPage);
   }
 
   void _onLoadCharacters(
@@ -26,8 +27,33 @@ class CharacterBloc extends Bloc<CharacterEvent, CharacterState> {
         data: state.data.copyWith(
           characters: pagedCharacters.results,
           totalCount: pagedCharacters.count,
+          page: 1,
+          hasNextPage: pagedCharacters.hasNextPage,
         ),
       ),
     );
+  }
+
+  void _onLoadNextCharactersPage(
+    LoadNextCharactersPageEvent event,
+    Emitter<CharacterState> emit,
+  ) async {
+    if (state.data.hasNextPage) {
+      emit(CharacterNextPageLoading(data: state.data));
+      PagedListEntity<CharacterEntity> pagedCharacters = await CharacterRepositoryImpl().getCharacters(
+        page: state.data.page + 1,
+      );
+
+      emit(
+        CharacterLoaded(
+          data: state.data.copyWith(
+            characters: [...state.data.characters, ...pagedCharacters.results],
+            totalCount: pagedCharacters.count,
+            page: state.data.page + 1,
+            hasNextPage: pagedCharacters.hasNextPage,
+          ),
+        ),
+      );
+    }
   }
 }

@@ -12,14 +12,37 @@ class CharactersScreen extends StatefulWidget {
 }
 
 class _CharactersScreenState extends State<CharactersScreen> {
+  ScrollController controller = ScrollController();
+
   late bool isListView;
+
+  CharacterBloc get bloc => context.read<CharacterBloc>();
 
   @override
   void initState() {
-    context.read<CharacterBloc>().add(LoadCharactersEvent());
+    bloc.add(LoadCharactersEvent());
 
     isListView = true;
+
+    controller.addListener(
+      () {
+        final bool isCloseToEnd = controller.position.pixels > controller.position.maxScrollExtent - 200;
+
+        final bool isNextPageLoadingPossible = bloc.state is! CharacterNextPageLoading && bloc.state.data.hasNextPage;
+
+        if (isCloseToEnd && isNextPageLoadingPossible) {
+          // Пробросить событие что нужно грузить следующую страницу
+          bloc.add(LoadNextCharactersPageEvent());
+        }
+      },
+    );
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -67,8 +90,10 @@ class _CharactersScreenState extends State<CharactersScreen> {
                 if (state is CharacterLoaded)
                   Expanded(
                     child: CharacterListContent(
+                      controller: controller,
                       characters: state.data.characters,
                       isListView: isListView,
+                      showLoadingIndicator: state is CharacterNextPageLoading,
                     ),
                   )
                 else if (state is CharacterLoading)
