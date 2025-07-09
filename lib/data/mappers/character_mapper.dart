@@ -23,10 +23,11 @@ class CharacterMapper {
   static CharacterStatus _toCharacterStatus(String status) {
     print(CharacterStatus.values); // => [CharacterStatus.dead, CharacterStatus.alive, CharacterStatus.unknown]
 
-    return CharacterStatus.values.firstWhereOrNull((element) => element.name == status) ?? CharacterStatus.unknown;
+    return CharacterStatus.values.firstWhereOrNull((element) => element.name == status.toLowerCase()) ??
+        CharacterStatus.unknown;
   }
 
   static Gender _toGender(String gender) {
-    return Gender.values.firstWhereOrNull((element) => element.name == gender) ?? Gender.unknown;
+    return Gender.values.firstWhereOrNull((element) => element.name == gender.toLowerCase()) ?? Gender.unknown;
   }
 }
