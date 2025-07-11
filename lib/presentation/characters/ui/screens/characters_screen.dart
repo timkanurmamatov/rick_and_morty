@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rick_and_morty/presentation/characters/ui/bloc/character_bloc/character_bloc.dart';
 import 'package:rick_and_morty/presentation/characters/ui/screens/characters_search_screen.dart';
 import 'package:rick_and_morty/presentation/characters/ui/widgets/character_list_content.dart';
+import 'package:rick_and_morty/presentation/common/widgets/search_container.dart';
 import 'package:rick_and_morty/presentation/common/widgets/total_count_widget.dart';
 
 class CharactersScreen extends StatefulWidget {
@@ -27,9 +28,13 @@ class _CharactersScreenState extends State<CharactersScreen> {
 
     controller.addListener(
       () {
-        final bool isCloseToEnd = controller.position.pixels > controller.position.maxScrollExtent - 200;
+        final bool isCloseToEnd =
+            controller.position.pixels >
+            controller.position.maxScrollExtent - 200;
 
-        final bool isNextPageLoadingPossible = bloc.state is! CharacterNextPageLoading && bloc.state.data.hasNextPage;
+        final bool isNextPageLoadingPossible =
+            bloc.state is! CharacterNextPageLoading &&
+            bloc.state.data.hasNextPage;
 
         if (isCloseToEnd && isNextPageLoadingPossible) {
           // Пробросить событие что нужно грузить следующую страницу
@@ -56,26 +61,16 @@ class _CharactersScreenState extends State<CharactersScreen> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SearchBar(
-                  elevation: WidgetStatePropertyAll(0),
-                  backgroundColor: WidgetStatePropertyAll(Color(0xFFF2F2F2)),
-                  leading: IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.search),
-                  ),
-                  hintText: "Поиск",
-                  trailing: [
-                    SizedBox(height: 26, child: VerticalDivider()),
-                    IconButton(icon: Icon(Icons.filter_alt), onPressed: () {}),
-                  ],
-                  // enabled: false,
-                  onTap: () {
+                SearchContainer(
+                  label: "Найти персонажа",
+                  onSearchPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => CharactersSearchScreen(),
                       ),
                     );
                   },
+                  onFilterPressed: (){},
                 ),
                 SizedBox(height: 20),
                 Row(
