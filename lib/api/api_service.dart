@@ -38,9 +38,11 @@ class ApiService {
 
   Future<PagedListDto<CharacterDto>> getCharacters({
     int? page,
+    String? name,
   }) async {
     Map<String, dynamic> queries = {
       if (page != null) "page": page,
+      if (name != null) "name": name,
     };
 
     Response res = await _dio.get("/character", queryParameters: queries);

@@ -18,9 +18,18 @@ class CharacterRepositoryImpl extends CharacterRepository {
   }
 
   @override
-  Future<PagedListEntity<CharacterEntity>> getCharacters({int? page}) async {
-    final PagedListDto<CharacterDto> res = await apiService.getCharacters(page: page);
-    return PagedListMapper<CharacterEntity, CharacterDto>().fromDto(res, CharacterMapper.fromDto);
+  Future<PagedListEntity<CharacterEntity>> getCharacters({
+    int? page,
+    String? name,
+  }) async {
+    final PagedListDto<CharacterDto> res = await apiService.getCharacters(
+      page: page,
+      name: name,
+    );
+    return PagedListMapper<CharacterEntity, CharacterDto>().fromDto(
+      res,
+      CharacterMapper.fromDto,
+    );
   }
 
   @override

@@ -40,6 +40,12 @@ void main() {
               fontWeight: FontWeight.w400,
               color: ColorConstants.onSurface,
             ),
+            titleMedium: TextStyle(
+              fontFamily: "Roboto",
+              fontSize: 16,
+              fontWeight: FontWeight.w400,
+              color: ColorConstants.onSurface,
+            ),
           ),
         ),
       ),
