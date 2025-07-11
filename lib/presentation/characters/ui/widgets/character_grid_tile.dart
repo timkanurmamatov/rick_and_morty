@@ -44,12 +44,19 @@ class CharacterGridTile extends StatelessWidget {
             color: _getStatusColor(status),
           ),
         ),
-        Text(name, style: Theme.of(context).textTheme.bodyMedium),
+        Text(
+          name,
+          style: Theme.of(context).textTheme.bodyMedium,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
         Text(
           "$species, ${gender.text}",
           style: Theme.of(context).textTheme.bodySmall?.copyWith(
             color: Theme.of(context).disabledColor,
           ),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
         ),
       ],
     );
