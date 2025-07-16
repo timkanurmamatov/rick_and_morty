@@ -6,8 +6,6 @@ import 'package:rick_and_morty/constants/image_paths.dart';
 import 'package:rick_and_morty/presentation/characters/ui/bloc/character_bloc/character_bloc.dart';
 import 'package:rick_and_morty/presentation/characters/ui/widgets/character_list_tile.dart';
 
-// Todo: добавить пагинацию
-
 class CharactersSearchScreen extends StatefulWidget {
   const CharactersSearchScreen({super.key});
 

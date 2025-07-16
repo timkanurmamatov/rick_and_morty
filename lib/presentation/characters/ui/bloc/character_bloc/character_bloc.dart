@@ -39,7 +39,6 @@ class CharacterBloc extends Bloc<CharacterEvent, CharacterState> {
       );
     } catch (e) {
       if (e is DioException && e.response?.statusCode == 404) {
-        print("IF WORKED");
         emit(
           CharacterLoaded(data: state.data.copyWith(characters: [])),
         );
