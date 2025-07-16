@@ -17,15 +17,39 @@ class CharactersSearchScreen extends StatefulWidget {
 
 class _CharactersSearchScreenState extends State<CharactersSearchScreen> {
   final TextEditingController controller = TextEditingController();
+  final ScrollController scrollController = ScrollController();
   final CharacterBloc _characterBloc = CharacterBloc();
   Timer? _debounce;
 
   @override
+  void initState() {
+    scrollController.addListener(_listener);
+    super.initState();
+  }
+
+  @override
   void dispose() {
     _debounce?.cancel();
+    scrollController.removeListener(_listener);
+    scrollController.dispose();
     controller.dispose();
     _characterBloc.close();
     super.dispose();
+  }
+
+  void _listener() {
+    final bool isCloseToEnd =
+        scrollController.position.pixels >
+        scrollController.position.maxScrollExtent - 200;
+
+    final bool isNextPageLoadingPossible =
+        _characterBloc.state is! CharacterNextPageLoading &&
+        _characterBloc.state.data.hasNextPage;
+
+    if (isCloseToEnd && isNextPageLoadingPossible) {
+      // Пробросить событие что нужно грузить следующую страницу
+      _characterBloc.add(LoadNextCharactersPageEvent());
+    }
   }
 
   @override
@@ -125,15 +149,29 @@ class _CharactersSearchScreenState extends State<CharactersSearchScreen> {
                       );
                     }
                     return ListView.separated(
-                      itemCount: characters.length,
+                      controller: scrollController,
+                      itemCount: state is CharacterNextPageLoading
+                          ? characters.length + 1
+                          : characters.length,
                       padding: EdgeInsets.all(16),
-                      itemBuilder: (context, index) => CharacterListTile(
-                        name: characters[index].name,
-                        gender: characters[index].gender,
-                        status: characters[index].status,
-                        species: characters[index].species,
-                        imageUrl: characters[index].image,
-                      ),
+                      itemBuilder: (context, index) {
+                        if (state is CharacterNextPageLoading && index >=  characters.length) {
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                        return Column(
+                          children: [
+                            CharacterListTile(
+                              name: characters[index].name,
+                              gender: characters[index].gender,
+                              status: characters[index].status,
+                              species: characters[index].species,
+                              imageUrl: characters[index].image,
+                            ),
+                          ],
+                        );
+                      },
                       separatorBuilder: (context, index) =>
                           SizedBox(height: 16),
                     );

@@ -26,29 +26,28 @@ class _CharactersScreenState extends State<CharactersScreen> {
 
     isListView = true;
 
-    controller.addListener(
-      () {
-        final bool isCloseToEnd =
-            controller.position.pixels >
-            controller.position.maxScrollExtent - 200;
-
-        final bool isNextPageLoadingPossible =
-            bloc.state is! CharacterNextPageLoading &&
-            bloc.state.data.hasNextPage;
-
-        if (isCloseToEnd && isNextPageLoadingPossible) {
-          // Пробросить событие что нужно грузить следующую страницу
-          bloc.add(LoadNextCharactersPageEvent());
-        }
-      },
-    );
+    controller.addListener(_listener);
     super.initState();
   }
 
   @override
   void dispose() {
+    controller.removeListener(_listener);
     controller.dispose();
     super.dispose();
+  }
+
+  void _listener() {
+    final bool isCloseToEnd =
+        controller.position.pixels > controller.position.maxScrollExtent - 200;
+
+    final bool isNextPageLoadingPossible =
+        bloc.state is! CharacterNextPageLoading && bloc.state.data.hasNextPage;
+
+    if (isCloseToEnd && isNextPageLoadingPossible) {
+      // Пробросить событие что нужно грузить следующую страницу
+      bloc.add(LoadNextCharactersPageEvent());
+    }
   }
 
   @override
@@ -70,7 +69,7 @@ class _CharactersScreenState extends State<CharactersScreen> {
                       ),
                     );
                   },
-                  onFilterPressed: (){},
+                  onFilterPressed: () {},
                 ),
                 SizedBox(height: 20),
                 Row(
