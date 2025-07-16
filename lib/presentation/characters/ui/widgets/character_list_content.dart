@@ -35,6 +35,7 @@ class CharacterListContent extends StatelessWidget {
                   name: characters[index].name,
                   species: characters[index].species,
                   status: characters[index].status,
+                  id: characters[index].id,
                 );
               }
             },
@@ -58,6 +59,7 @@ class CharacterListContent extends StatelessWidget {
                   name: characters[index].name,
                   species: characters[index].species,
                   status: characters[index].status,
+                  id: characters[index].id,
                 );
               }
             },

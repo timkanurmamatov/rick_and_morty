@@ -166,6 +166,7 @@ class _CharactersSearchScreenState extends State<CharactersSearchScreen> {
                               status: characters[index].status,
                               species: characters[index].species,
                               imageUrl: characters[index].image,
+                              id: characters[index].id,
                             ),
                           ],
                         );
