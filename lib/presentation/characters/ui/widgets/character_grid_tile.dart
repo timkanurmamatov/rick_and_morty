@@ -53,7 +53,7 @@ class CharacterGridTile extends StatelessWidget {
           Text(
             status.text,
             style: Theme.of(context).textTheme.labelSmall?.copyWith(
-              color: _getStatusColor(status),
+              color: status.color,
             ),
           ),
           Text(
@@ -73,16 +73,5 @@ class CharacterGridTile extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  Color _getStatusColor(CharacterStatus status) {
-    switch (status) {
-      case CharacterStatus.alive:
-        return Colors.green;
-      case CharacterStatus.dead:
-        return Colors.red;
-      default:
-        return Colors.grey;
-    }
   }
 }

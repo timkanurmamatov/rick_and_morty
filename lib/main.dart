@@ -46,6 +46,18 @@ void main() {
               fontWeight: FontWeight.w400,
               color: ColorConstants.onSurface,
             ),
+            headlineLarge: TextStyle(
+              fontFamily: "Roboto",
+              fontSize: 34,
+              fontWeight: FontWeight.w400,
+              color: ColorConstants.onSurface,
+            ),
+            headlineSmall: TextStyle(
+              fontFamily: "Roboto",
+              fontSize: 20,
+              fontWeight: FontWeight.w500,
+              color: ColorConstants.onSurface,
+            ),
           ),
         ),
       ),
