@@ -18,6 +18,7 @@ class _CharactersSearchScreenState extends State<CharactersSearchScreen> {
   final ScrollController scrollController = ScrollController();
   final CharacterBloc _characterBloc = CharacterBloc();
   Timer? _debounce;
+  String searchQuery = ""; 
 
   @override
   void initState() {
@@ -46,7 +47,7 @@ class _CharactersSearchScreenState extends State<CharactersSearchScreen> {
 
     if (isCloseToEnd && isNextPageLoadingPossible) {
       // Пробросить событие что нужно грузить следующую страницу
-      _characterBloc.add(LoadNextCharactersPageEvent());
+      _characterBloc.add(LoadNextCharactersPageEvent(name: searchQuery));
     }
   }
 
@@ -190,6 +191,7 @@ class _CharactersSearchScreenState extends State<CharactersSearchScreen> {
     if (_debounce?.isActive ?? false) _debounce?.cancel();
     _debounce = Timer(const Duration(milliseconds: 500), () {
       _characterBloc.add(LoadCharactersEvent(name: query));
+      searchQuery = query;
     });
   }
 }
