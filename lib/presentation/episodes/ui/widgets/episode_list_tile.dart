@@ -56,7 +56,8 @@ class EpisodeListTile extends StatelessWidget {
         ),
       ),
       title: Text(name, style: Theme.of(context).textTheme.titleMedium),
-      subtitle: Text(DateFormat("d MMM yyyy").format(airDate)),
+      // todo: исправить формат даты
+      subtitle: Text(DateFormat("d MMMM yyyy").format(airDate)),
       trailing: Icon(Icons.chevron_right),
     );
   }
