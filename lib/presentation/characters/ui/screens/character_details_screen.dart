@@ -9,7 +9,6 @@ import 'package:rick_and_morty/presentation/characters/ui/bloc/character_details
 import 'package:rick_and_morty/presentation/characters/ui/widgets/info_tile.dart';
 import 'package:rick_and_morty/presentation/episodes/ui/widgets/episode_list_tile.dart';
 
-// todo: Исправить ошибку на некоторых персонажах (смотреть персонаж без картинки)
 class CharacterDetailsScreen extends StatefulWidget {
   final int id;
 
