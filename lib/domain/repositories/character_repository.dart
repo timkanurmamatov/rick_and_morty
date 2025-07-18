@@ -7,6 +7,8 @@ abstract class CharacterRepository {
   Future<PagedListEntity<CharacterEntity>> getCharacters({
     int? page,
     String? name,
+    Map<CharacterStatus, bool>? characterFilter,
+    Map<Gender, bool>? genderFilter,
   });
 
   Future<CharacterEntity> getCharacterById(int id);

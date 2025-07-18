@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rick_and_morty/presentation/characters/ui/bloc/character_bloc/character_bloc.dart';
+import 'package:rick_and_morty/presentation/characters/ui/bloc/filter_cubit/cubit/filter_cubit.dart';
+import 'package:rick_and_morty/presentation/characters/ui/screens/character_filter_screen.dart';
 import 'package:rick_and_morty/presentation/characters/ui/screens/characters_search_screen.dart';
 import 'package:rick_and_morty/presentation/characters/ui/widgets/character_list_content.dart';
 import 'package:rick_and_morty/presentation/common/widgets/search_container.dart';
@@ -55,59 +57,73 @@ class _CharactersScreenState extends State<CharactersScreen> {
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: BlocBuilder<CharacterBloc, CharacterState>(
-          builder: (context, state) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SearchContainer(
-                  label: "Найти персонажа",
-                  onSearchPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => CharactersSearchScreen(),
-                      ),
-                    );
-                  },
-                  onFilterPressed: () {},
-                ),
-                SizedBox(height: 20),
-                Row(
-                  children: [
-                    Expanded(
-                      child: TotalCountWidget(
-                        title: "Всего персонажей",
-                        amount: state.data.totalCount,
-                      ),
-                    ),
-                    IconButton(
-                      onPressed: () => setState(() => isListView = !isListView),
-                      icon: Icon(
-                        isListView ? Icons.grid_view : Icons.list,
-                        color: Theme.of(context).disabledColor,
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 16),
-                if (state is CharacterLoaded)
-                  Expanded(
-                    child: CharacterListContent(
-                      controller: controller,
-                      characters: state.data.characters,
-                      isListView: isListView,
-                      showLoadingIndicator: state is CharacterNextPageLoading,
-                    ),
-                  )
-                else if (state is CharacterLoading)
-                  Expanded(
-                    child: Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  ),
-              ],
-            );
+        child: BlocListener<FilterCubit, FilterState>(
+          listener: (context, state) {
+            if(state is FilterUpdated){
+              bloc.add(LoadCharactersEvent());
+            }
           },
+          child: BlocBuilder<CharacterBloc, CharacterState>(
+            builder: (context, state) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SearchContainer(
+                    label: "Найти персонажа",
+                    onSearchPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => CharactersSearchScreen(),
+                        ),
+                      );
+                    },
+                    onFilterPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => CharacterFilterScreen(),
+                        ),
+                      );
+                    },
+                  ),
+                  SizedBox(height: 20),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TotalCountWidget(
+                          title: "Всего персонажей",
+                          amount: state.data.totalCount,
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () =>
+                            setState(() => isListView = !isListView),
+                        icon: Icon(
+                          isListView ? Icons.grid_view : Icons.list,
+                          color: Theme.of(context).disabledColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 16),
+                  if (state is CharacterLoaded)
+                    Expanded(
+                      child: CharacterListContent(
+                        controller: controller,
+                        characters: state.data.characters,
+                        isListView: isListView,
+                        showLoadingIndicator: state is CharacterNextPageLoading,
+                      ),
+                    )
+                  else if (state is CharacterLoading)
+                    Expanded(
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    ),
+                ],
+              );
+            },
+          ),
         ),
       ),
     );

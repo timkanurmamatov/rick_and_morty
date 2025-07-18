@@ -25,6 +25,8 @@ class CharacterBloc extends Bloc<CharacterEvent, CharacterState> {
       PagedListEntity<CharacterEntity> pagedCharacters =
           await CharacterRepositoryImpl().getCharacters(
             name: event.name,
+            characterFilter: event.characterFilter,
+            genderFilter: event.genderFilter,
           );
 
       emit(
@@ -58,6 +60,8 @@ class CharacterBloc extends Bloc<CharacterEvent, CharacterState> {
           await CharacterRepositoryImpl().getCharacters(
             page: state.data.page + 1,
             name: event.name,
+            characterFilter: event.characterFilter,
+            genderFilter: event.genderFilter,
           );
 
       emit(
