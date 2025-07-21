@@ -4,7 +4,6 @@ import 'package:rick_and_morty/data/repositories/character_repository_impl.dart'
 import 'package:rick_and_morty/data/repositories/episode_repository_impl.dart';
 import 'package:rick_and_morty/domain/models/character_entity.dart';
 import 'package:rick_and_morty/domain/models/episode_entity.dart';
-import 'package:rick_and_morty/domain/repositories/character_repository.dart';
 
 part 'character_details_state.dart';
 

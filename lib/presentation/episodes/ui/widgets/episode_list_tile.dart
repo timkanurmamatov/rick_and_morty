@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:rick_and_morty/constants/image_paths.dart';
-import 'package:rick_and_morty/domain/extensions/character_status_extension.dart';
-import 'package:rick_and_morty/domain/extensions/gender_extension.dart';
-import 'package:rick_and_morty/domain/models/character_entity.dart';
-import 'package:rick_and_morty/presentation/characters/ui/screens/character_details_screen.dart';
 
 
 class EpisodeListTile extends StatelessWidget {

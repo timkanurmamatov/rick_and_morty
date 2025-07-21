@@ -20,13 +20,4 @@ class FilterCubit extends Cubit<FilterState> {
       );
     }
   }
-
-  void filterUsed() {
-    emit(
-      FilterUsed(
-        selectedStatus: state.selectedStatus,
-        selectedGender: state.selectedGender,
-      ),
-    );
-  }
 }
