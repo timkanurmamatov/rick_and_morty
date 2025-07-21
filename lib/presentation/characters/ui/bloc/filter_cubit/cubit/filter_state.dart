@@ -2,33 +2,18 @@ part of 'filter_cubit.dart';
 
 @immutable
 sealed class FilterState {
-  final Map<CharacterStatus, bool> statusFilter;
-  final Map<Gender, bool> genderFilter;
+  final CharacterStatus? selectedStatus;
+  final Gender? selectedGender;
 
-  const FilterState({required this.statusFilter, required this.genderFilter});
+  const FilterState({this.selectedStatus, this.selectedGender});
 }
 
-final class FilterInitial extends FilterState {
-  FilterInitial()
-    : super(
-        genderFilter: Map.fromEntries(
-          Gender.values.map(
-            (e) => MapEntry(e, false),
-          ),
-        ),
-        statusFilter: Map.fromEntries(
-          CharacterStatus.values.map(
-            (e) => MapEntry(e, false),
-          ),
-        ),
-      );
-}
+final class FilterInitial extends FilterState {}
 
 final class FilterUpdated extends FilterState {
-  const FilterUpdated({required super.statusFilter, required super.genderFilter});
+  const FilterUpdated({super.selectedStatus, super.selectedGender});
 }
 
 final class FilterUsed extends FilterState {
-  const FilterUsed({required super.statusFilter, required super.genderFilter});
-
+  const FilterUsed({super.selectedStatus, super.selectedGender});
 }

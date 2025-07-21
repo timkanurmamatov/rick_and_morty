@@ -21,6 +21,7 @@ class _CharactersScreenState extends State<CharactersScreen> {
   late bool isListView;
 
   CharacterBloc get bloc => context.read<CharacterBloc>();
+  FilterCubit get filterCubit => context.read<FilterCubit>();
 
   @override
   void initState() {
@@ -48,7 +49,12 @@ class _CharactersScreenState extends State<CharactersScreen> {
 
     if (isCloseToEnd && isNextPageLoadingPossible) {
       // Пробросить событие что нужно грузить следующую страницу
-      bloc.add(LoadNextCharactersPageEvent());
+      bloc.add(
+        LoadNextCharactersPageEvent(
+          characterStatus: filterCubit.state.selectedStatus,
+          gender: filterCubit.state.selectedGender,
+        ),
+      );
     }
   }
 
@@ -59,8 +65,13 @@ class _CharactersScreenState extends State<CharactersScreen> {
         padding: const EdgeInsets.all(16.0),
         child: BlocListener<FilterCubit, FilterState>(
           listener: (context, state) {
-            if(state is FilterUpdated){
-              bloc.add(LoadCharactersEvent());
+            if (state is FilterUpdated) {
+              bloc.add(
+                LoadCharactersEvent(
+                  gender: state.selectedGender,
+                  characterStatus: state.selectedStatus,
+                ),
+              );
             }
           },
           child: BlocBuilder<CharacterBloc, CharacterState>(

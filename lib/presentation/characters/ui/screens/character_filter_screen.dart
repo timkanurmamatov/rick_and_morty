@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:rick_and_morty/constants/icon_paths.dart';
 import 'package:rick_and_morty/domain/extensions/character_status_extension.dart';
 import 'package:rick_and_morty/domain/extensions/gender_extension.dart';
 import 'package:rick_and_morty/domain/models/character_entity.dart';
@@ -14,15 +16,15 @@ class CharacterFilterScreen extends StatefulWidget {
 }
 
 class _CharacterFilterScreenState extends State<CharacterFilterScreen> {
-  late Map<CharacterStatus, bool> statusFilter;
-  late Map<Gender, bool> genderFilter;
+  CharacterStatus? selectedStatus;
+  Gender? selectedGender;
 
   FilterCubit get filterCubit => context.read<FilterCubit>();
 
   @override
   void initState() {
-    statusFilter = filterCubit.state.statusFilter;
-    genderFilter = filterCubit.state.genderFilter;
+    selectedStatus = filterCubit.state.selectedStatus;
+    selectedGender = filterCubit.state.selectedGender;
     super.initState();
   }
 
@@ -31,13 +33,24 @@ class _CharacterFilterScreenState extends State<CharacterFilterScreen> {
     return PopScope(
       onPopInvokedWithResult: (didPop, result) {
         filterCubit.updateFilters(
-          statusFilter: statusFilter,
-          genderFilter: genderFilter,
+          selectedStatus: selectedStatus,
+          selectedGender: selectedGender,
         );
       },
       child: Scaffold(
         appBar: AppBar(
           title: Text("Фильтры"),
+          actions: [
+            IconButton(
+              onPressed: (){
+                setState(() {
+                  selectedGender = null;
+                  selectedStatus = null;
+                });
+              },
+              icon: SvgPicture.asset(IconPaths.clearFilter),
+            ),
+          ],
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -51,25 +64,20 @@ class _CharacterFilterScreenState extends State<CharacterFilterScreen> {
                 ),
               ),
               ...List.generate(
-                statusFilter.keys.length,
+                CharacterStatus.values.length,
                 (index) {
-                  // ключ это статус из мапы Map<CharacterStatus, bool>
-                  final CharacterStatus key = statusFilter.keys.elementAt(
-                    index,
-                  );
+                  final CharacterStatus status = CharacterStatus.values[index];
 
                   return ListTile(
+                    onTap: () => _onStatusChanged(status),
                     contentPadding: EdgeInsets.zero,
-                    leading: Checkbox(
-                      value: statusFilter[key],
-                      onChanged: (value) {
-                        setState(() {
-                          statusFilter[key] = value ?? false;
-                        });
-                      },
+                    leading: Radio<CharacterStatus>(
+                      value: status,
+                      onChanged: _onStatusChanged,
+                      groupValue: selectedStatus,
                     ),
                     title: Text(
-                      key.text,
+                      status.text,
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                   );
@@ -83,22 +91,20 @@ class _CharacterFilterScreenState extends State<CharacterFilterScreen> {
                 ),
               ),
               ...List.generate(
-                genderFilter.keys.length,
+                Gender.values.length,
                 (index) {
-                  final Gender key = genderFilter.keys.elementAt(index);
+                  final Gender gender = Gender.values[index];
 
                   return ListTile(
+                    onTap: () => _onGenderChanged(gender),
                     contentPadding: EdgeInsets.zero,
-                    leading: Checkbox(
-                      value: genderFilter[key],
-                      onChanged: (value) {
-                        setState(() {
-                          genderFilter[key] = value ?? false;
-                        });
-                      },
+                    leading: Radio<Gender>(
+                      value: gender,
+                      onChanged: _onGenderChanged,
+                      groupValue: selectedGender,
                     ),
                     title: Text(
-                      key.text,
+                      gender.text,
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                   );
@@ -109,5 +115,17 @@ class _CharacterFilterScreenState extends State<CharacterFilterScreen> {
         ),
       ),
     );
+  }
+
+  void _onStatusChanged(value) {
+    setState(() {
+      selectedStatus = value;
+    });
+  }
+
+  void _onGenderChanged(value) {
+    setState(() {
+      selectedGender = value;
+    });
   }
 }

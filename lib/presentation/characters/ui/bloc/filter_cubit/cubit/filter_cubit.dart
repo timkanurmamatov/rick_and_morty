@@ -1,7 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:rick_and_morty/domain/models/character_entity.dart';
-import 'package:collection/collection.dart';
 
 part 'filter_state.dart';
 
@@ -9,25 +8,24 @@ class FilterCubit extends Cubit<FilterState> {
   FilterCubit() : super(FilterInitial());
 
   void updateFilters({
-    required Map<CharacterStatus, bool> statusFilter,
-    required Map<Gender, bool> genderFilter,
+    CharacterStatus? selectedStatus,
+    Gender? selectedGender,
   }) {
-    final eq = DeepCollectionEquality();
-    bool statusFilterChanged = !eq.equals(state.statusFilter, statusFilter);
-    bool genderFilterChanged = !eq.equals(state.genderFilter, genderFilter);
+    bool statusChanged = selectedStatus != state.selectedStatus;
+    bool genderChanged = selectedGender != state.selectedGender;
 
-    if (statusFilterChanged || genderFilterChanged) {
+    if (statusChanged || genderChanged) {
       emit(
-        FilterUpdated(statusFilter: statusFilter, genderFilter: genderFilter),
+        FilterUpdated(selectedStatus: selectedStatus, selectedGender: selectedGender),
       );
     }
   }
 
-  void filterUdes() {
+  void filterUsed() {
     emit(
       FilterUsed(
-        statusFilter: state.statusFilter,
-        genderFilter: state.genderFilter,
+        selectedStatus: state.selectedStatus,
+        selectedGender: state.selectedGender,
       ),
     );
   }

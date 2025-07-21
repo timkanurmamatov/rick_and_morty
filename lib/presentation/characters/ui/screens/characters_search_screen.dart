@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rick_and_morty/constants/image_paths.dart';
 import 'package:rick_and_morty/presentation/characters/ui/bloc/character_bloc/character_bloc.dart';
+import 'package:rick_and_morty/presentation/characters/ui/bloc/filter_cubit/cubit/filter_cubit.dart';
 import 'package:rick_and_morty/presentation/characters/ui/widgets/character_list_tile.dart';
 
 class CharactersSearchScreen extends StatefulWidget {
@@ -18,7 +19,9 @@ class _CharactersSearchScreenState extends State<CharactersSearchScreen> {
   final ScrollController scrollController = ScrollController();
   final CharacterBloc _characterBloc = CharacterBloc();
   Timer? _debounce;
-  String searchQuery = ""; 
+  String searchQuery = "";
+
+  FilterCubit get filterCubit => context.read<FilterCubit>();
 
   @override
   void initState() {
@@ -47,7 +50,13 @@ class _CharactersSearchScreenState extends State<CharactersSearchScreen> {
 
     if (isCloseToEnd && isNextPageLoadingPossible) {
       // Пробросить событие что нужно грузить следующую страницу
-      _characterBloc.add(LoadNextCharactersPageEvent(name: searchQuery));
+      _characterBloc.add(
+        LoadNextCharactersPageEvent(
+          name: searchQuery,
+          characterStatus: filterCubit.state.selectedStatus,
+          gender: filterCubit.state.selectedGender,
+        ),
+      );
     }
   }
 
@@ -154,7 +163,8 @@ class _CharactersSearchScreenState extends State<CharactersSearchScreen> {
                           : characters.length,
                       padding: EdgeInsets.all(16),
                       itemBuilder: (context, index) {
-                        if (state is CharacterNextPageLoading && index >=  characters.length) {
+                        if (state is CharacterNextPageLoading &&
+                            index >= characters.length) {
                           return Center(
                             child: CircularProgressIndicator(),
                           );
@@ -190,7 +200,13 @@ class _CharactersSearchScreenState extends State<CharactersSearchScreen> {
   void _onSearchChanged(String query) {
     if (_debounce?.isActive ?? false) _debounce?.cancel();
     _debounce = Timer(const Duration(milliseconds: 500), () {
-      _characterBloc.add(LoadCharactersEvent(name: query));
+      _characterBloc.add(
+        LoadCharactersEvent(
+          name: query,
+          gender: filterCubit.state.selectedGender,
+          characterStatus: filterCubit.state.selectedStatus,
+        ),
+      );
       searchQuery = query;
     });
   }

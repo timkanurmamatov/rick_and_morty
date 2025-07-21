@@ -5,24 +5,24 @@ sealed class CharacterEvent {}
 
 final class LoadCharactersEvent extends CharacterEvent {
   final String? name;
-  final Map<CharacterStatus, bool>? characterFilter;
-  final Map<Gender, bool>? genderFilter;
+  final CharacterStatus? characterStatus;
+  final Gender? gender;
 
   LoadCharactersEvent({
     this.name,
-    this.characterFilter,
-    this.genderFilter,
+    this.characterStatus,
+    this.gender,
   });
 }
 
 final class LoadNextCharactersPageEvent extends CharacterEvent {
   final String? name;
-  final Map<CharacterStatus, bool>? characterFilter;
-  final Map<Gender, bool>? genderFilter;
+  final CharacterStatus? characterStatus;
+  final Gender? gender;
 
   LoadNextCharactersPageEvent({
     this.name,
-    this.characterFilter,
-    this.genderFilter,
+    this.characterStatus,
+    this.gender,
   });
 }
