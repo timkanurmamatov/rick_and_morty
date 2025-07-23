@@ -11,9 +11,9 @@ import 'package:rick_and_morty/presentation/characters/ui/widgets/info_tile.dart
 import 'package:rick_and_morty/presentation/episodes/ui/widgets/episode_list_tile.dart';
 
 class CharacterDetailsScreen extends StatefulWidget {
-  final int id;
-
-  const CharacterDetailsScreen({super.key, required this.id});
+  const CharacterDetailsScreen({
+    super.key,
+  });
 
   @override
   State<CharacterDetailsScreen> createState() => _CharacterDetailsScreenState();
@@ -22,14 +22,20 @@ class CharacterDetailsScreen extends StatefulWidget {
 // todo: Подключить экран к кубиту (кубит готов)
 class _CharacterDetailsScreenState extends State<CharacterDetailsScreen> {
   late CharacterDetailsCubit _cubit;
+  late int id;
 
   @override
   void initState() {
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    id = ModalRoute.of(context)!.settings.arguments as int;
     _cubit = CharacterDetailsCubit();
 
-    _cubit.loadDetails(widget.id);
-
-    super.initState();
+    _cubit.loadDetails(id);
+    super.didChangeDependencies();
   }
 
   @override
@@ -104,7 +110,6 @@ class _CharacterDetailsScreenState extends State<CharacterDetailsScreen> {
   // ["d", ...l1, "e", "f"]
 
   // ["d", "a", "b", "c", "e", "f"]
-
 
   List<Widget> _getCharacterInfoWidgets(CharacterDetailsSuccess state) {
     Widget image = FadeInImage.assetNetwork(

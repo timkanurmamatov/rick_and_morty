@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rick_and_morty/common/extensions/build_context_extension.dart';
 import 'package:rick_and_morty/constants/image_paths.dart';
+import 'package:rick_and_morty/constants/route_constants.dart';
 import 'package:rick_and_morty/domain/extensions/character_status_extension.dart';
 import 'package:rick_and_morty/domain/extensions/gender_extension.dart';
 import 'package:rick_and_morty/domain/models/character_entity.dart';
@@ -28,12 +29,16 @@ class CharacterGridTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => CharacterDetailsScreen(id: id),
-          ),
+        Navigator.of(context).pushNamed(
+          RouteConstants.characterDetailsRoute,
+          arguments: id,
         );
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) => CharacterDetailsScreen(id: id),
+        //   ),
+        // );
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,

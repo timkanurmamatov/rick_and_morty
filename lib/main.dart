@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rick_and_morty/constants/color_constants.dart';
+import 'package:rick_and_morty/constants/route_constants.dart';
 import 'package:rick_and_morty/home_screen.dart';
 import 'package:rick_and_morty/presentation/characters/ui/bloc/character_bloc/character_bloc.dart';
 import 'package:rick_and_morty/presentation/characters/ui/bloc/filter_cubit/cubit/filter_cubit.dart';
+import 'package:rick_and_morty/presentation/characters/ui/screens/character_details_screen.dart';
 import 'package:rick_and_morty/presentation/settings/cubit/cubit/theme_cubit.dart';
 import 'package:rick_and_morty/theme_constants.dart';
 
@@ -32,8 +34,15 @@ void main() {
       child: BlocBuilder<ThemeCubit, ThemeMode>(
         builder: (context, themeMode) {
           return MaterialApp(
-            home: HomeScreen(),
+            // home: HomeScreen(),
             themeMode: themeMode,
+            initialRoute: '/',
+            routes: {
+              // When navigating to the "/" route, build the FirstScreen widget.
+              '/': (context) => const HomeScreen(),
+              // When navigating to the "/second" route, build the SecondScreen widget.
+              RouteConstants.characterDetailsRoute: (context) => const CharacterDetailsScreen(),
+            },
             theme: ThemeConstants.lightTheme,
             darkTheme: ThemeConstants.darkTheme,
           );
