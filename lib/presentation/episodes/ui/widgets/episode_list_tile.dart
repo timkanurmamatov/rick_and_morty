@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:rick_and_morty/common/extensions/build_context_extension.dart';
 
 
 class EpisodeListTile extends StatelessWidget {
@@ -37,20 +38,20 @@ class EpisodeListTile extends StatelessWidget {
           children: [
             Text(
               episode.substring(0, episode.length ~/ 2),
-              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+              style: context.textTheme.headlineSmall?.copyWith(
                 color: Theme.of(context).colorScheme.onPrimary,
               ),
             ),
             Text(
               episode.substring(episode.length ~/ 2, episode.length),
-              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+              style: context.textTheme.headlineSmall?.copyWith(
                 color: Theme.of(context).colorScheme.onPrimary,
               ),
             ),
           ],
         ),
       ),
-      title: Text(name, style: Theme.of(context).textTheme.titleMedium),
+      title: Text(name, style: context.textTheme.titleMedium),
       // todo: исправить формат даты
       subtitle: Text(DateFormat("d MMMM yyyy").format(airDate)),
       trailing: Icon(Icons.chevron_right),

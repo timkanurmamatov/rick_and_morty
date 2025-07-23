@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rick_and_morty/common/extensions/build_context_extension.dart';
 import 'package:rick_and_morty/presentation/settings/cubit/cubit/theme_cubit.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -16,7 +17,7 @@ class SettingsScreen extends StatelessWidget {
         children: [
           Text(
             "Внешний вид".toUpperCase(),
-            style: Theme.of(context).textTheme.labelSmall,
+            style: context.textTheme.labelSmall,
           ),
           SizedBox(height: 24),
           ListTile(
@@ -39,7 +40,7 @@ class SettingsScreen extends StatelessWidget {
                           children: [
                             Text(
                               "Темная тема",
-                              style: Theme.of(context).textTheme.titleMedium,
+                              style: context.textTheme.titleMedium,
                             ),
                             ...List.generate(
                               ThemeMode.values.length,
@@ -76,13 +77,13 @@ class SettingsScreen extends StatelessWidget {
             leading: Icon(Icons.palette_outlined),
             title: Text(
               "Темная тема",
-              style: Theme.of(context).textTheme.titleMedium,
+              style: context.textTheme.titleMedium,
             ),
             subtitle: BlocBuilder<ThemeCubit, ThemeMode>(
               builder: (context, state) {
                 return Text(
                   state.text,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  style: context.textTheme.bodyMedium?.copyWith(
                     color: Theme.of(context).disabledColor,
                   ),
                 );

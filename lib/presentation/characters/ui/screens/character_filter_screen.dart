@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:rick_and_morty/common/extensions/build_context_extension.dart';
 import 'package:rick_and_morty/constants/icon_paths.dart';
 import 'package:rick_and_morty/domain/extensions/character_status_extension.dart';
 import 'package:rick_and_morty/domain/extensions/gender_extension.dart';
@@ -58,7 +59,7 @@ class _CharacterFilterScreenState extends State<CharacterFilterScreen> {
             children: [
               Text(
                 "СТАТУС",
-                style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                style: context.textTheme.labelSmall?.copyWith(
                   color: Theme.of(context).disabledColor,
                 ),
               ),
@@ -77,7 +78,7 @@ class _CharacterFilterScreenState extends State<CharacterFilterScreen> {
                     ),
                     title: Text(
                       status.text,
-                      style: Theme.of(context).textTheme.titleMedium,
+                      style: context.textTheme.titleMedium,
                     ),
                   );
                 },
@@ -85,7 +86,7 @@ class _CharacterFilterScreenState extends State<CharacterFilterScreen> {
               Divider(height: 40),
               Text(
                 "ПОЛ",
-                style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                style: context.textTheme.labelSmall?.copyWith(
                   color: Theme.of(context).disabledColor,
                 ),
               ),
@@ -104,7 +105,7 @@ class _CharacterFilterScreenState extends State<CharacterFilterScreen> {
                     ),
                     title: Text(
                       gender.text,
-                      style: Theme.of(context).textTheme.titleMedium,
+                      style: context.textTheme.titleMedium,
                     ),
                   );
                 },

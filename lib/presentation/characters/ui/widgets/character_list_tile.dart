@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rick_and_morty/common/extensions/build_context_extension.dart';
 import 'package:rick_and_morty/constants/image_paths.dart';
 import 'package:rick_and_morty/domain/extensions/character_status_extension.dart';
 import 'package:rick_and_morty/domain/extensions/gender_extension.dart';
@@ -55,19 +56,19 @@ class CharacterListTile extends StatelessWidget {
               children: [
                 Text(
                   status.text,
-                  style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                  style: context.textTheme.labelSmall?.copyWith(
                     color: status.color,
                   ),
                 ),
                 Text(
                   name,
-                  style: Theme.of(context).textTheme.bodyMedium,
+                  style: context.textTheme.bodyMedium,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
                 Text(
                   "$species, ${gender.text}",
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  style: context.textTheme.bodySmall?.copyWith(
                     color: Theme.of(context).disabledColor,
                   ),
                 ),

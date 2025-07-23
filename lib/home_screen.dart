@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:rick_and_morty/common/extensions/build_context_extension.dart';
 import 'package:rick_and_morty/constants/icon_paths.dart';
 import 'package:rick_and_morty/presentation/characters/ui/screens/characters_screen.dart';
 import 'package:rick_and_morty/presentation/episodes/ui/episodes_screen.dart';
@@ -27,8 +28,8 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
-        selectedItemColor: Theme.of(context).colorScheme.primary,
-        unselectedItemColor: Theme.of(context).colorScheme.outline,
+        selectedItemColor: context.colorScheme.primary,
+        unselectedItemColor: context.colorScheme.outline,
         items: _buildTabs(),
         showUnselectedLabels: true,
         onTap: (value) => setState(() => _currentIndex = value),
@@ -86,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   ColorFilter getFilter(int index) => ColorFilter.mode(
-    index == _currentIndex ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.outline,
+    index == _currentIndex ? context.colorScheme.primary : Theme.of(context).colorScheme.outline,
     BlendMode.srcIn,
   );
 }

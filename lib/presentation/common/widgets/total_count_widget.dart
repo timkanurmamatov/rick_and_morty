@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rick_and_morty/common/extensions/build_context_extension.dart';
 
 class TotalCountWidget extends StatelessWidget {
   final String title;
@@ -14,7 +15,7 @@ class TotalCountWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       "$title: $amount",
-      style: Theme.of(context).textTheme.labelSmall?.copyWith(
+      style: context.textTheme.labelSmall?.copyWith(
         color: Theme.of(context).disabledColor,
       ),
       maxLines: 1,

@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rick_and_morty/common/extensions/build_context_extension.dart';
 import 'package:rick_and_morty/constants/image_paths.dart';
 import 'package:rick_and_morty/domain/extensions/character_status_extension.dart';
 import 'package:rick_and_morty/domain/extensions/gender_extension.dart';
@@ -152,13 +153,13 @@ class _CharacterDetailsScreenState extends State<CharacterDetailsScreen> {
       Center(
         child: Text(
           state.character.name,
-          style: Theme.of(context).textTheme.headlineLarge,
+          style: context.textTheme.headlineLarge,
         ),
       ),
       Center(
         child: Text(
           state.character.status.text,
-          style: Theme.of(context).textTheme.labelSmall?.copyWith(
+          style: context.textTheme.labelSmall?.copyWith(
             color: state.character.status.color,
           ),
         ),
@@ -203,7 +204,7 @@ class _CharacterDetailsScreenState extends State<CharacterDetailsScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Text(
           "Эпизоды",
-          style: Theme.of(context).textTheme.headlineSmall,
+          style: context.textTheme.headlineSmall,
         ),
       ),
       ...List.generate(

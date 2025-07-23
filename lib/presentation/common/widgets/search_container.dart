@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rick_and_morty/common/extensions/build_context_extension.dart';
 
 class SearchContainer extends StatelessWidget {
   final String label;
@@ -31,7 +32,7 @@ class SearchContainer extends StatelessWidget {
             Expanded(
               child: Text(
                 "Найти персонажа",
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                style: context.textTheme.bodyMedium?.copyWith(
                   color: Theme.of(context).dividerColor,
                 ),
               ),

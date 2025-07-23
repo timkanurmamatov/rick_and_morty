@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rick_and_morty/common/extensions/build_context_extension.dart';
 
 class InfoTile extends StatelessWidget {
   final String label;
@@ -17,13 +18,13 @@ class InfoTile extends StatelessWidget {
     return ListTile(
       title: Text(
         label,
-        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+        style: context.textTheme.bodySmall?.copyWith(
           color: Theme.of(context).disabledColor,
         ),
       ),
       subtitle: Text(
         value,
-        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+        style: context.textTheme.bodyMedium?.copyWith(
           fontWeight: FontWeight.w400,
         ),
       ),
